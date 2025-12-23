@@ -1,0 +1,36 @@
+# Core data stack
+pandas
+numpy
+scipy
+scikit-learn
+statsmodels
+
+# Visualization
+matplotlib
+seaborn
+altair
+vega-datasets
+plotly
+
+# Geospatial
+geopandas
+folium
+OSMPythonTools
+
+# Networks / NLP (used in some notebooks)
+networkx
+nltk
+wordcloud
+vaderSentiment
+
+# IO / utilities
+openpyxl
+python-dateutil
+
+# Notebooks
+jupyter
+ipython
+
+# Other analyses
+yfinance
+pyvis
