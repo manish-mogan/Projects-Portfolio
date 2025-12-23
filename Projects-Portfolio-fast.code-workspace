@@ -1,8 +1,16 @@
 {
   "folders": [
     {
-      "name": "Projects-Portfolio",
-      "path": "."
+      "name": "code",
+      "path": "code"
+    },
+    {
+      "name": "data",
+      "path": "data"
+    },
+    {
+      "name": "scripts",
+      "path": "scripts"
     }
   ],
   "settings": {
@@ -11,33 +19,29 @@
       "**/.venv/**": true,
       ".venv/**": true,
       "**/__pycache__/**": true,
-      "**/.ipynb_checkpoints/**": true,
-      ".ipynb_checkpoints/**": true,
-      "data/**": true
+      "**/.ipynb_checkpoints/**": true
     },
     "search.exclude": {
       "**/.git/**": true,
       "**/.venv/**": true,
       ".venv/**": true,
       "**/__pycache__/**": true,
-      "**/.ipynb_checkpoints/**": true,
-      "data/**": true
+      "**/.ipynb_checkpoints/**": true
     },
     "files.exclude": {
       "**/.git/**": true,
       "**/.venv/**": true,
       ".venv/**": true,
       "**/__pycache__/**": true,
-      "**/.ipynb_checkpoints/**": true,
-      "data/**": true
+      "**/.ipynb_checkpoints/**": true
     },
+
     "python.analysis.exclude": [
       "**/.git/**",
       "**/.venv/**",
       ".venv/**",
       "**/__pycache__/**",
-      "**/.ipynb_checkpoints/**",
-      "data/**"
+      "**/.ipynb_checkpoints/**"
     ],
     "python.analysis.indexing": false,
     "python.analysis.diagnosticMode": "openFilesOnly",
