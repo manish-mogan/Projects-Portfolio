@@ -30,11 +30,16 @@ This writes:
 
 - `data/synthetic_customer_churn.csv`
 - `data/synthetic_retail_sales_daily.csv`
+- `data/synthetic_ab_test_experiment.csv`
+- `data/synthetic_product_reviews.csv`
 
 ## Added projects
 
 - `code/synthetic_customer_churn.ipynb` — end-to-end churn modeling (EDA → features → baseline models)
 - `code/synthetic_retail_sales_forecasting.ipynb` — time series forecasting + anomaly detection on synthetic retail sales
+- `code/synthetic_ab_testing.ipynb` — A/B testing workflow (SRM, conversion uplift, revenue per user, segments)
+- `code/geospatial_site_selection.ipynb` — geospatial clustering + candidate site selection with an interactive map
+- `code/nlp_sentiment_topics.ipynb` — sentiment scoring + topic modeling (NMF) on reviews + text
 
 ## Notes
 
