@@ -6,7 +6,7 @@ A recruiter-friendly portfolio of data analytics and data science work using Pyt
 
 - `code/` — notebooks (EDA, visualization, modeling, story-driven analyses)
 - `code/stellar_mapper/` — multi-file subproject (data + notebook + outputs)
-- `data/` — local datasets used by notebooks (including synthetic datasets)
+- `data/` — local datasets used by notebooks (including generated demo datasets)
 
 ## Quickstart
 
@@ -18,26 +18,26 @@ pip install -r requirements.txt
 
 Then open any notebook under `code/` in VS Code (or Jupyter) and run cells top-to-bottom.
 
-## Synthetic datasets (optional)
+## Demo datasets (optional)
 
 To add a couple of clean, reproducible datasets for demo projects:
 
 ```bash
-python scripts/generate_synthetic_datasets.py
+python scripts/generate_demo_datasets.py
 ```
 
 This writes:
 
-- `data/synthetic_customer_churn.csv`
-- `data/synthetic_retail_sales_daily.csv`
-- `data/synthetic_ab_test_experiment.csv`
-- `data/synthetic_product_reviews.csv`
+- `data/customer_churn.csv`
+- `data/retail_sales_daily.csv`
+- `data/ab_test_experiment.csv`
+- `data/product_reviews.csv`
 
 ## Added projects
 
-- `code/synthetic_customer_churn.ipynb` — end-to-end churn modeling (EDA → features → baseline models)
-- `code/synthetic_retail_sales_forecasting.ipynb` — time series forecasting + anomaly detection on synthetic retail sales
-- `code/synthetic_ab_testing.ipynb` — A/B testing workflow (SRM, conversion uplift, revenue per user, segments)
+- `code/customer_churn.ipynb` — end-to-end churn modeling (EDA → features → baseline models)
+- `code/retail_sales_forecasting.ipynb` — time series forecasting + anomaly detection on generated retail sales
+- `code/ab_testing.ipynb` — A/B testing workflow (SRM, conversion uplift, revenue per user, segments)
 - `code/geospatial_site_selection.ipynb` — geospatial clustering + candidate site selection with an interactive map
 - `code/nlp_sentiment_topics.ipynb` — sentiment scoring + topic modeling (NMF) on reviews + text
 

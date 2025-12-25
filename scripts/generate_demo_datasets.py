@@ -3,7 +3,7 @@
 Writes CSVs into ./data so notebooks can run without external downloads.
 
 Usage:
-  python scripts/generate_synthetic_datasets.py
+    python scripts/generate_demo_datasets.py
 """
 
 from __future__ import annotations
@@ -25,19 +25,19 @@ class Paths:
 
     @property
     def churn_csv(self) -> Path:
-        return self.data_dir / "synthetic_customer_churn.csv"
+        return self.data_dir / "customer_churn.csv"
 
     @property
     def retail_csv(self) -> Path:
-        return self.data_dir / "synthetic_retail_sales_daily.csv"
+        return self.data_dir / "retail_sales_daily.csv"
 
     @property
     def ab_test_csv(self) -> Path:
-        return self.data_dir / "synthetic_ab_test_experiment.csv"
+        return self.data_dir / "ab_test_experiment.csv"
 
     @property
     def reviews_csv(self) -> Path:
-        return self.data_dir / "synthetic_product_reviews.csv"
+        return self.data_dir / "product_reviews.csv"
 
 
 def _sigmoid(x: np.ndarray) -> np.ndarray:
