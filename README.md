@@ -5,6 +5,7 @@ A recruiter-friendly portfolio of data analytics and data science work using Pyt
 ## Repository layout
 
 - `code/` — notebooks (EDA, visualization, modeling, story-driven analyses)
+- `code/karate/` — small network-analysis artifact(s) for the Karate Club graph
 - `code/stellar_mapper/` — multi-file subproject (data + notebook + outputs)
 - `data/` — local datasets used by notebooks (including generated demo datasets)
 
@@ -41,6 +42,7 @@ This writes:
 - `code/geospatial_site_selection.ipynb` — geospatial clustering + candidate site selection with an interactive map
 - `code/nlp_sentiment_topics.ipynb` — sentiment scoring + topic modeling (NMF) on reviews + text
 
+- `code/karate/karate_network.ipynb` — quick network centrality + visualization (see also `code/karate/karate.html`)
 ## Notes
 
 - Some notebooks use live data sources (e.g., OpenStreetMap / Overpass) and require an internet connection.

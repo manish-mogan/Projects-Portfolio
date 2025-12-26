@@ -30,6 +30,8 @@ python-dateutil
 # Notebooks
 jupyter
 ipython
+nbconvert
+ipykernel
 
 # Other analyses
 yfinance
