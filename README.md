@@ -41,9 +41,11 @@ This writes:
 - `code/ab_testing.ipynb` — A/B testing workflow (SRM, conversion uplift, revenue per user, segments)
 - `code/geospatial_site_selection.ipynb` — geospatial clustering + candidate site selection with an interactive map
 - `code/nlp_sentiment_topics.ipynb` — sentiment scoring + topic modeling (NMF) on reviews + text
-
 - `code/karate/karate_network.ipynb` — quick network centrality + visualization (see also `code/karate/karate.html`)
 ## Notes
 
 - Some notebooks use live data sources (e.g., OpenStreetMap / Overpass) and require an internet connection.
 - Large/visual artifacts (e.g., PDFs) are included when they are part of the portfolio output.
+
+If you run into installation issues with geospatial dependencies (e.g., `geopandas`), consider using Conda/Mamba
+or installing system packages required by `pyproj`/`gdal` on your platform.
