@@ -19,6 +19,15 @@ pip install -r requirements.txt
 
 Then open any notebook under `code/` in VS Code (or Jupyter) and run cells top-to-bottom.
 
+## Keep notebooks output-free
+
+This repo is intended to keep notebook outputs (cell results / execution counts) out of version control.
+If you run notebooks locally, you can strip outputs before committing:
+
+```bash
+python scripts/strip_notebook_outputs.py
+```
+
 ## Demo datasets (optional)
 
 To add a couple of clean, reproducible datasets for demo projects:
