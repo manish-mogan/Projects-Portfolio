@@ -1,9 +1,13 @@
-"""Generate small, realistic synthetic datasets for portfolio projects.
+"""Generate small, realistic demo datasets for portfolio projects.
 
-Writes CSVs into ./data so notebooks can run without external downloads.
+Writes datasets into each project's local folder under:
+
+    code/<project>/data/
+
+so each project can be self-contained and run without external downloads.
 
 Usage:
-    python scripts/generate_demo_datasets.py
+        python scripts/generate_demo_datasets.py
 """
 
 from __future__ import annotations
@@ -20,24 +24,40 @@ class Paths:
     repo_root: Path
 
     @property
-    def data_dir(self) -> Path:
-        return self.repo_root / "data"
+    def code_dir(self) -> Path:
+        return self.repo_root / "code"
+
+    @property
+    def churn_dir(self) -> Path:
+        return self.code_dir / "customer_churn" / "data"
+
+    @property
+    def retail_dir(self) -> Path:
+        return self.code_dir / "retail_sales_forecasting" / "data"
+
+    @property
+    def ab_test_dir(self) -> Path:
+        return self.code_dir / "ab_testing" / "data"
+
+    @property
+    def reviews_dir(self) -> Path:
+        return self.code_dir / "nlp_sentiment_topics" / "data"
 
     @property
     def churn_csv(self) -> Path:
-        return self.data_dir / "customer_churn.csv"
+        return self.churn_dir / "customer_churn.csv"
 
     @property
     def retail_csv(self) -> Path:
-        return self.data_dir / "retail_sales_daily.csv"
+        return self.retail_dir / "retail_sales_daily.csv"
 
     @property
     def ab_test_csv(self) -> Path:
-        return self.data_dir / "ab_test_experiment.csv"
+        return self.ab_test_dir / "ab_test_experiment.csv"
 
     @property
     def reviews_csv(self) -> Path:
-        return self.data_dir / "product_reviews.csv"
+        return self.reviews_dir / "product_reviews.csv"
 
 
 def _sigmoid(x: np.ndarray) -> np.ndarray:
@@ -351,7 +371,9 @@ def make_product_reviews(
 def main() -> None:
     repo_root = Path(__file__).resolve().parents[1]
     paths = Paths(repo_root=repo_root)
-    paths.data_dir.mkdir(parents=True, exist_ok=True)
+
+    for d in (paths.churn_dir, paths.retail_dir, paths.ab_test_dir, paths.reviews_dir):
+        d.mkdir(parents=True, exist_ok=True)
 
     rng = np.random.default_rng(42)
 

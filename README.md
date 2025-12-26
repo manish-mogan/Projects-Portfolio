@@ -4,10 +4,9 @@ A recruiter-friendly portfolio of data analytics and data science work using Pyt
 
 ## Repository layout
 
-- `code/` — notebooks (EDA, visualization, modeling, story-driven analyses)
-- `code/karate/` — small network-analysis artifact(s) for the Karate Club graph
+- `code/` — projects (each project has its own folder, notebook, and data)
+- `code/karate/` — network-analysis project for the Karate Club graph
 - `code/stellar_mapper/` — multi-file subproject (data + notebook + outputs)
-- `data/` — local datasets used by notebooks (including generated demo datasets)
 
 ## Quickstart
 
@@ -38,10 +37,10 @@ python scripts/generate_demo_datasets.py
 
 This writes:
 
-- `data/customer_churn.csv`
-- `data/retail_sales_daily.csv`
-- `data/ab_test_experiment.csv`
-- `data/product_reviews.csv`
+- `code/customer_churn/data/customer_churn.csv`
+- `code/retail_sales_forecasting/data/retail_sales_daily.csv`
+- `code/ab_testing/data/ab_test_experiment.csv`
+- `code/nlp_sentiment_topics/data/product_reviews.csv`
 
 ## Added projects
 
