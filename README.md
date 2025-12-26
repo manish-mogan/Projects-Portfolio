@@ -4,9 +4,8 @@ A recruiter-friendly portfolio of data analytics and data science work using Pyt
 
 ## Repository layout
 
-- `code/` — projects (each project has its own folder, notebook, and data)
-- `code/karate/` — network-analysis project for the Karate Club graph
-- `code/stellar_mapper/` — multi-file subproject (data + notebook + outputs)
+- `code/` — each project lives in its own folder and includes its notebook + `data/`
+- `scripts/` — helper scripts (dataset generation, notebook output stripping)
 
 ## Quickstart
 
@@ -16,12 +15,11 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Then open any notebook under `code/` in VS Code (or Jupyter) and run cells top-to-bottom.
+Open any notebook under `code/` in VS Code (or Jupyter) and run cells top-to-bottom.
 
 ## Keep notebooks output-free
 
-This repo is intended to keep notebook outputs (cell results / execution counts) out of version control.
-If you run notebooks locally, you can strip outputs before committing:
+This repo keeps notebook outputs (cell results / execution counts) out of version control. After running notebooks locally:
 
 ```bash
 python scripts/strip_notebook_outputs.py
@@ -29,31 +27,36 @@ python scripts/strip_notebook_outputs.py
 
 ## Demo datasets (optional)
 
-To add a couple of clean, reproducible datasets for demo projects:
+To (re)generate deterministic demo datasets used by a few projects:
 
 ```bash
 python scripts/generate_demo_datasets.py
 ```
 
-This writes:
+This writes datasets into project-local folders, for example:
 
 - `code/customer_churn/data/customer_churn.csv`
 - `code/retail_sales_forecasting/data/retail_sales_daily.csv`
 - `code/ab_testing/data/ab_test_experiment.csv`
 - `code/nlp_sentiment_topics/data/product_reviews.csv`
+- `code/fraud_detection_anomaly/data/transactions.csv`
+- `code/customer_segmentation_rfm/data/orders.csv`
+- `code/cohort_retention_analysis/data/events.csv`
 
-## Added projects
+## Projects
 
-- `code/customer_churn.ipynb` — end-to-end churn modeling (EDA → features → baseline models)
-- `code/retail_sales_forecasting.ipynb` — time series forecasting + anomaly detection on generated retail sales
-- `code/ab_testing.ipynb` — A/B testing workflow (SRM, conversion uplift, revenue per user, segments)
-- `code/geospatial_site_selection.ipynb` — geospatial clustering + candidate site selection with an interactive map
-- `code/nlp_sentiment_topics.ipynb` — sentiment scoring + topic modeling (NMF) on reviews + text
-- `code/karate/karate_network.ipynb` — quick network centrality + visualization (see also `code/karate/karate.html`)
+- `code/ab_testing/ab_testing.ipynb` — A/B testing workflow (SRM checks, uplift, CUPED, multiple testing)
+- `code/geospatial_site_selection/geospatial_site_selection.ipynb` — geospatial clustering + candidate site selection
+- `code/nlp_sentiment_topics/nlp_sentiment_topics.ipynb` — sentiment scoring + topic modeling on reviews
+- `code/customer_churn/customer_churn.ipynb` — churn modeling (EDA → features → baseline models)
+- `code/retail_sales_forecasting/retail_sales_forecasting.ipynb` — time series forecasting on generated retail sales
+- `code/fraud_detection_anomaly/fraud_detection_anomaly.ipynb` — anomaly detection / fraud scoring on transactions
+- `code/customer_segmentation_rfm/customer_segmentation_rfm.ipynb` — RFM feature engineering + customer segmentation
+- `code/cohort_retention_analysis/cohort_retention_analysis.ipynb` — cohort retention + survival-style views from events
+- `code/karate/karate_network.ipynb` — network centrality + visualization (see also `code/karate/karate.html`)
+- `code/stellar_mapper/stellar_map_builder.ipynb` — multi-file project mapping star catalog data (see `code/stellar_mapper/`)
+
 ## Notes
 
-- Some notebooks use live data sources (e.g., OpenStreetMap / Overpass) and require an internet connection.
-- Large/visual artifacts (e.g., PDFs) are included when they are part of the portfolio output.
-
-If you run into installation issues with geospatial dependencies (e.g., `geopandas`), consider using Conda/Mamba
-or installing system packages required by `pyproj`/`gdal` on your platform.
+- Some notebooks use live data sources (e.g., OpenStreetMap / Overpass) and need an internet connection.
+- If geospatial dependencies are difficult to install on your platform, Conda/Mamba can be easier than system pip.

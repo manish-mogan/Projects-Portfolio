@@ -44,6 +44,18 @@ class Paths:
         return self.code_dir / "nlp_sentiment_topics" / "data"
 
     @property
+    def fraud_dir(self) -> Path:
+        return self.code_dir / "fraud_detection_anomaly" / "data"
+
+    @property
+    def rfm_dir(self) -> Path:
+        return self.code_dir / "customer_segmentation_rfm" / "data"
+
+    @property
+    def cohort_dir(self) -> Path:
+        return self.code_dir / "cohort_retention_analysis" / "data"
+
+    @property
     def churn_csv(self) -> Path:
         return self.churn_dir / "customer_churn.csv"
 
@@ -58,6 +70,18 @@ class Paths:
     @property
     def reviews_csv(self) -> Path:
         return self.reviews_dir / "product_reviews.csv"
+
+    @property
+    def fraud_csv(self) -> Path:
+        return self.fraud_dir / "transactions.csv"
+
+    @property
+    def rfm_orders_csv(self) -> Path:
+        return self.rfm_dir / "orders.csv"
+
+    @property
+    def cohort_events_csv(self) -> Path:
+        return self.cohort_dir / "events.csv"
 
 
 def _sigmoid(x: np.ndarray) -> np.ndarray:
@@ -368,11 +392,164 @@ def make_product_reviews(
     return df
 
 
+def make_transactions_for_fraud_demo(
+    rng: np.random.Generator,
+    n: int = 80000,
+    start: str = "2025-01-01",
+    days: int = 120,
+) -> pd.DataFrame:
+    """Synthetic transactions dataset for anomaly/fraud detection demos."""
+
+    tx_id = np.arange(1, n + 1)
+    user_id = rng.integers(1, 25001, size=n)
+    merchant_id = rng.integers(1, 4001, size=n)
+
+    ts = pd.to_datetime(start) + pd.to_timedelta(rng.integers(0, days, size=n), unit="D")
+    hour = rng.integers(0, 24, size=n)
+    ts = ts + pd.to_timedelta(hour, unit="h")
+
+    channel = rng.choice(["card_present", "ecom", "mobile_wallet"], size=n, p=[0.55, 0.35, 0.10])
+    country = rng.choice(["US", "CA", "GB", "DE", "IN", "AU"], size=n, p=[0.52, 0.10, 0.10, 0.08, 0.12, 0.08])
+    device = rng.choice(["ios", "android", "web"], size=n, p=[0.28, 0.42, 0.30])
+
+    base_amount = rng.lognormal(mean=3.2, sigma=0.6, size=n)
+    amount = base_amount * np.where(channel == "ecom", 1.10, 1.0) * np.where(channel == "mobile_wallet", 0.95, 1.0)
+    amount = np.clip(amount, 1.0, None)
+
+    # Add a small labeled fraud signal (useful for evaluating anomaly detection)
+    fraud_rate = 0.012
+    is_fraud = rng.random(size=n) < fraud_rate
+
+    # Fraudulent transactions: higher amounts, more ecom, more late-night
+    amount = np.where(is_fraud, amount * rng.uniform(2.0, 6.0, size=n), amount)
+    channel = np.where(is_fraud & (rng.random(size=n) < 0.75), "ecom", channel)
+    hour = np.where(is_fraud & (rng.random(size=n) < 0.55), rng.integers(0, 5, size=n), hour)
+
+    df = pd.DataFrame(
+        {
+            "transaction_id": tx_id,
+            "timestamp": ts.astype("datetime64[ns]").astype(str),
+            "hour": hour.astype(int),
+            "user_id": user_id.astype(int),
+            "merchant_id": merchant_id.astype(int),
+            "channel": channel,
+            "country": country,
+            "device": device,
+            "amount": np.round(amount.astype(float), 2),
+            "is_fraud": is_fraud.astype(int),
+        }
+    )
+    return df
+
+
+def make_orders_for_rfm_demo(
+    rng: np.random.Generator,
+    n_customers: int = 12000,
+    start: str = "2024-01-01",
+    end: str = "2025-12-31",
+) -> pd.DataFrame:
+    """Synthetic orders for RFM segmentation."""
+
+    customers = np.arange(1, n_customers + 1)
+
+    # Customer-level propensity
+    activity = rng.beta(1.6, 3.2, size=n_customers)
+    avg_order = rng.lognormal(mean=3.4, sigma=0.5, size=n_customers)
+
+    start_dt = pd.to_datetime(start)
+    end_dt = pd.to_datetime(end)
+    days = int((end_dt - start_dt).days) + 1
+
+    rows: list[dict[str, object]] = []
+    order_id = 1
+    for cust_i, cust in enumerate(customers):
+        # Expected number of orders in the window
+        lam = 2.5 + 18.0 * activity[cust_i]
+        n_orders = int(rng.poisson(lam=lam))
+        if n_orders <= 0:
+            continue
+
+        order_days = rng.integers(0, days, size=n_orders)
+        order_dates = (start_dt + pd.to_timedelta(order_days, unit="D")).sort_values()
+
+        for d in order_dates:
+            n_items = int(np.clip(rng.poisson(lam=2.2) + 1, 1, 12))
+            aov = float(avg_order[cust_i] * rng.normal(1.0, 0.25))
+            aov = max(aov, 5.0)
+            revenue = aov
+
+            rows.append(
+                {
+                    "order_id": f"O{order_id:08d}",
+                    "customer_id": f"C{cust:06d}",
+                    "order_date": d.date().isoformat(),
+                    "items": n_items,
+                    "revenue": round(revenue, 2),
+                }
+            )
+            order_id += 1
+
+    return pd.DataFrame(rows)
+
+
+def make_events_for_cohort_demo(
+    rng: np.random.Generator,
+    n_users: int = 25000,
+    start: str = "2025-01-01",
+    weeks: int = 26,
+) -> pd.DataFrame:
+    """Synthetic app events to support weekly cohort retention analysis."""
+
+    start_dt = pd.to_datetime(start)
+    signup_week = rng.integers(0, weeks, size=n_users)
+    user_id = np.arange(1, n_users + 1)
+
+    # Retention propensity (higher for some users)
+    stickiness = rng.beta(1.4, 3.0, size=n_users)
+    segment = rng.choice(["free", "trial", "paid"], size=n_users, p=[0.70, 0.20, 0.10])
+    stickiness = stickiness + 0.25 * (segment == "paid") + 0.10 * (segment == "trial")
+    stickiness = np.clip(stickiness, 0, 1)
+
+    rows: list[dict[str, object]] = []
+    for i in range(n_users):
+        s_week = int(signup_week[i])
+        signup_date = start_dt + pd.to_timedelta(s_week * 7 + int(rng.integers(0, 7)), unit="D")
+        # Generate active weeks after signup with a simple decaying probability
+        for w in range(0, weeks - s_week):
+            p_active = float(stickiness[i] * (0.85 ** w))
+            if rng.random() < p_active:
+                # events in that week
+                n_events = int(np.clip(rng.poisson(lam=3.0 + 8.0 * stickiness[i]), 1, 60))
+                for _ in range(n_events):
+                    day_offset = int(rng.integers(0, 7))
+                    evt_date = signup_date + pd.to_timedelta(w * 7 + day_offset, unit="D")
+                    evt = rng.choice(["session", "purchase", "feature_use"], p=[0.78, 0.06, 0.16])
+                    rows.append(
+                        {
+                            "user_id": int(user_id[i]),
+                            "segment": segment[i],
+                            "signup_date": signup_date.date().isoformat(),
+                            "event_date": evt_date.date().isoformat(),
+                            "event": evt,
+                        }
+                    )
+
+    return pd.DataFrame(rows)
+
+
 def main() -> None:
     repo_root = Path(__file__).resolve().parents[1]
     paths = Paths(repo_root=repo_root)
 
-    for d in (paths.churn_dir, paths.retail_dir, paths.ab_test_dir, paths.reviews_dir):
+    for d in (
+        paths.churn_dir,
+        paths.retail_dir,
+        paths.ab_test_dir,
+        paths.reviews_dir,
+        paths.fraud_dir,
+        paths.rfm_dir,
+        paths.cohort_dir,
+    ):
         d.mkdir(parents=True, exist_ok=True)
 
     rng = np.random.default_rng(42)
@@ -389,10 +566,22 @@ def main() -> None:
     reviews = make_product_reviews(rng)
     reviews.to_csv(paths.reviews_csv, index=False)
 
+    fraud = make_transactions_for_fraud_demo(rng)
+    fraud.to_csv(paths.fraud_csv, index=False)
+
+    orders = make_orders_for_rfm_demo(rng)
+    orders.to_csv(paths.rfm_orders_csv, index=False)
+
+    events = make_events_for_cohort_demo(rng)
+    events.to_csv(paths.cohort_events_csv, index=False)
+
     print(f"Wrote: {paths.churn_csv} ({len(churn):,} rows)")
     print(f"Wrote: {paths.retail_csv} ({len(retail):,} rows)")
     print(f"Wrote: {paths.ab_test_csv} ({len(ab):,} rows)")
     print(f"Wrote: {paths.reviews_csv} ({len(reviews):,} rows)")
+    print(f"Wrote: {paths.fraud_csv} ({len(fraud):,} rows)")
+    print(f"Wrote: {paths.rfm_orders_csv} ({len(orders):,} rows)")
+    print(f"Wrote: {paths.cohort_events_csv} ({len(events):,} rows)")
 
 
 if __name__ == "__main__":
