@@ -460,36 +460,42 @@ def make_orders_for_rfm_demo(
     end_dt = pd.to_datetime(end)
     days = int((end_dt - start_dt).days) + 1
 
-    rows: list[dict[str, object]] = []
-    order_id = 1
-    for cust_i, cust in enumerate(customers):
-        # Expected number of orders in the window
-        lam = 2.5 + 18.0 * activity[cust_i]
-        n_orders = int(rng.poisson(lam=lam))
-        if n_orders <= 0:
-            continue
+    # Vectorized generation (faster than nested Python loops)
+    lam = 2.5 + 18.0 * activity
+    n_orders_per_customer = rng.poisson(lam=lam).astype(int)
+    n_orders_per_customer = np.clip(n_orders_per_customer, 0, None)
+    total_orders = int(n_orders_per_customer.sum())
+    if total_orders == 0:
+        return pd.DataFrame(columns=["order_id", "customer_id", "order_date", "items", "revenue"])
 
-        order_days = rng.integers(0, days, size=n_orders)
-        order_dates = (start_dt + pd.to_timedelta(order_days, unit="D")).sort_values()
+    customer_idx = np.repeat(np.arange(n_customers), n_orders_per_customer)
+    customer_id_int = np.repeat(customers, n_orders_per_customer)
 
-        for d in order_dates:
-            n_items = int(np.clip(rng.poisson(lam=2.2) + 1, 1, 12))
-            aov = float(avg_order[cust_i] * rng.normal(1.0, 0.25))
-            aov = max(aov, 5.0)
-            revenue = aov
+    order_days = rng.integers(0, days, size=total_orders)
+    order_dt = start_dt + pd.to_timedelta(order_days, unit="D")
 
-            rows.append(
-                {
-                    "order_id": f"O{order_id:08d}",
-                    "customer_id": f"C{cust:06d}",
-                    "order_date": d.date().isoformat(),
-                    "items": n_items,
-                    "revenue": round(revenue, 2),
-                }
-            )
-            order_id += 1
+    items = rng.poisson(lam=2.2, size=total_orders) + 1
+    items = np.clip(items, 1, 12).astype(int)
 
-    return pd.DataFrame(rows)
+    aov = avg_order[customer_idx] * rng.normal(1.0, 0.25, size=total_orders)
+    aov = np.clip(aov, 5.0, None)
+    revenue = np.round(aov.astype(float), 2)
+
+    df = pd.DataFrame(
+        {
+            "customer_id_int": customer_id_int.astype(int),
+            "order_dt": order_dt,
+            "items": items,
+            "revenue": revenue,
+        }
+    )
+    # Match previous behavior: per-customer chronological order
+    df = df.sort_values(["customer_id_int", "order_dt"], kind="mergesort").reset_index(drop=True)
+    df.insert(0, "order_id", [f"O{idx:08d}" for idx in range(1, len(df) + 1)])
+    df.insert(1, "customer_id", df["customer_id_int"].map(lambda c: f"C{c:06d}"))
+    df.insert(2, "order_date", df["order_dt"].dt.date.astype(str))
+    df = df.drop(columns=["customer_id_int", "order_dt"])
+    return df
 
 
 def make_events_for_cohort_demo(
@@ -510,31 +516,39 @@ def make_events_for_cohort_demo(
     stickiness = stickiness + 0.25 * (segment == "paid") + 0.10 * (segment == "trial")
     stickiness = np.clip(stickiness, 0, 1)
 
-    rows: list[dict[str, object]] = []
-    for i in range(n_users):
-        s_week = int(signup_week[i])
-        signup_date = start_dt + pd.to_timedelta(s_week * 7 + int(rng.integers(0, 7)), unit="D")
-        # Generate active weeks after signup with a simple decaying probability
-        for w in range(0, weeks - s_week):
-            p_active = float(stickiness[i] * (0.85 ** w))
-            if rng.random() < p_active:
-                # events in that week
-                n_events = int(np.clip(rng.poisson(lam=3.0 + 8.0 * stickiness[i]), 1, 60))
-                for _ in range(n_events):
-                    day_offset = int(rng.integers(0, 7))
-                    evt_date = signup_date + pd.to_timedelta(w * 7 + day_offset, unit="D")
-                    evt = rng.choice(["session", "purchase", "feature_use"], p=[0.78, 0.06, 0.16])
-                    rows.append(
-                        {
-                            "user_id": int(user_id[i]),
-                            "segment": segment[i],
-                            "signup_date": signup_date.date().isoformat(),
-                            "event_date": evt_date.date().isoformat(),
-                            "event": evt,
-                        }
-                    )
+    # Vectorized generation (far faster than nested Python loops)
+    signup_day_offset = rng.integers(0, 7, size=n_users)
+    signup_date = start_dt + pd.to_timedelta(signup_week * 7 + signup_day_offset, unit="D")
 
-    return pd.DataFrame(rows)
+    week_offsets = np.arange(weeks)
+    available = week_offsets[None, :] < (weeks - signup_week)[:, None]
+    p_active = stickiness[:, None] * (0.85 ** week_offsets[None, :])
+    active = (rng.random(size=(n_users, weeks)) < p_active) & available
+
+    user_idx, w_idx = np.nonzero(active)
+    if len(user_idx) == 0:
+        return pd.DataFrame(columns=["user_id", "segment", "signup_date", "event_date", "event"])
+
+    lam_events = 3.0 + 8.0 * stickiness[user_idx]
+    n_events = rng.poisson(lam=lam_events).astype(int)
+    n_events = np.clip(n_events, 1, 60)
+
+    user_idx_rep = np.repeat(user_idx, n_events)
+    w_idx_rep = np.repeat(w_idx, n_events)
+    day_offset = rng.integers(0, 7, size=len(user_idx_rep))
+    evt_date = signup_date[user_idx_rep] + pd.to_timedelta(w_idx_rep * 7 + day_offset, unit="D")
+    evt = rng.choice(["session", "purchase", "feature_use"], size=len(user_idx_rep), p=[0.78, 0.06, 0.16])
+
+    df = pd.DataFrame(
+        {
+            "user_id": (user_idx_rep + 1).astype(int),
+            "segment": segment[user_idx_rep],
+            "signup_date": pd.to_datetime(signup_date[user_idx_rep]).date.astype(str),
+            "event_date": pd.to_datetime(evt_date).date.astype(str),
+            "event": evt,
+        }
+    )
+    return df
 
 
 def main() -> None:
