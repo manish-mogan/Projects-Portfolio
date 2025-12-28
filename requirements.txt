@@ -11,16 +11,18 @@ seaborn
 altair
 vega-datasets
 plotly
+anywidget
 
 # Geospatial
 geopandas
 folium
 OSMPythonTools
+geodatasets
 
 # Networks / NLP (used in some notebooks)
 networkx
 nltk
-wordcloud
+wordcloud==1.9.4
 vaderSentiment
 
 # IO / utilities

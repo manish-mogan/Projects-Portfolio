@@ -2,7 +2,7 @@
 
 Writes datasets into each project's local folder under:
 
-    code/<project>/data/
+    code/<project>/
 
 so each project can be self-contained and run without external downloads.
 
@@ -29,31 +29,31 @@ class Paths:
 
     @property
     def churn_dir(self) -> Path:
-        return self.code_dir / "customer_churn" / "data"
+        return self.code_dir / "customer_churn"
 
     @property
     def retail_dir(self) -> Path:
-        return self.code_dir / "retail_sales_forecasting" / "data"
+        return self.code_dir / "retail_sales_forecasting"
 
     @property
     def ab_test_dir(self) -> Path:
-        return self.code_dir / "ab_testing" / "data"
+        return self.code_dir / "ab_testing"
 
     @property
     def reviews_dir(self) -> Path:
-        return self.code_dir / "nlp_sentiment_topics" / "data"
+        return self.code_dir / "nlp_sentiment_topics"
 
     @property
     def fraud_dir(self) -> Path:
-        return self.code_dir / "fraud_detection_anomaly" / "data"
+        return self.code_dir / "fraud_detection_anomaly"
 
     @property
     def rfm_dir(self) -> Path:
-        return self.code_dir / "customer_segmentation_rfm" / "data"
+        return self.code_dir / "customer_segmentation_rfm"
 
     @property
     def cohort_dir(self) -> Path:
-        return self.code_dir / "cohort_retention_analysis" / "data"
+        return self.code_dir / "cohort_retention_analysis"
 
     @property
     def churn_csv(self) -> Path:
