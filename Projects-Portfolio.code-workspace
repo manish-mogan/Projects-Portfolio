@@ -29,7 +29,12 @@
       ".venv/**": true,
       "**/__pycache__/**": true,
       "**/.ipynb_checkpoints/**": true,
-      "data/**": true
+      "data/**": true,
+      ".gitignore": true,
+      "README.md": true,
+      "requirements.txt": true,
+      "pyrightconfig.json": true,
+      "*.code-workspace": true
     },
     "python.analysis.exclude": [
       "**/.git/**",
