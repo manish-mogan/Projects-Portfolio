@@ -1,16 +1,8 @@
 {
   "folders": [
     {
-      "name": "code",
-      "path": "code"
-    },
-    {
-      "name": "data",
-      "path": "data"
-    },
-    {
-      "name": "scripts",
-      "path": "scripts"
+      "name": "Projects-Portfolio",
+      "path": "."
     }
   ],
   "settings": {
@@ -19,21 +11,24 @@
       "**/.venv/**": true,
       ".venv/**": true,
       "**/__pycache__/**": true,
-      "**/.ipynb_checkpoints/**": true
+      "**/.ipynb_checkpoints/**": true,
+      "data/**": true
     },
     "search.exclude": {
       "**/.git/**": true,
       "**/.venv/**": true,
       ".venv/**": true,
       "**/__pycache__/**": true,
-      "**/.ipynb_checkpoints/**": true
+      "**/.ipynb_checkpoints/**": true,
+      "data/**": true
     },
     "files.exclude": {
       "**/.git/**": true,
       "**/.venv/**": true,
       ".venv/**": true,
       "**/__pycache__/**": true,
-      "**/.ipynb_checkpoints/**": true
+      "**/.ipynb_checkpoints/**": true,
+      "data/**": true
     },
 
     "python.analysis.exclude": [
@@ -41,12 +36,12 @@
       "**/.venv/**",
       ".venv/**",
       "**/__pycache__/**",
-      "**/.ipynb_checkpoints/**"
+      "**/.ipynb_checkpoints/**",
+      "data/**"
     ],
     "python.analysis.indexing": false,
     "python.analysis.diagnosticMode": "openFilesOnly",
 
-    "git.autorefresh": false,
-    "git.untrackedChanges": "hidden"
+    "git.autorefresh": true
   }
 }
