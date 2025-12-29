@@ -23,9 +23,6 @@ projects/Population Generations Story/cache/
 # Notebook-generated exports
 projects/Altair/Cars.html
 
-# Large local datasets (downloaded as needed)
-projects/Customer Churn/Customer Churn.csv
-
 # OS/editor
 .DS_Store
 .vscode/
