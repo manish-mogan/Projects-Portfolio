@@ -7,7 +7,7 @@ This folder contains a topic-organized set of LeetCode problem stubs.
 - Each problem lives under: `leetcode/<topic>/<id>-<slug>/`
 - Each problem folder contains:
   - `problem.md` — a short, original summary + your notes
-  - `solution.py` — a blank `Solution` stub to implement later
+  - `solution.ipynb` — a notebook stub to implement later
 
 ## Topics
 
@@ -17,7 +17,7 @@ Topics are grouped for navigation (e.g., `arrays_hashing`, `two_pointers`, `stac
 
 1. Open a problem folder.
 2. Read `problem.md` and fill in the **Notes** section (approach, edge cases, complexity).
-3. Implement the solution in `solution.py`.
+3. Implement the solution in `solution.ipynb`.
 
 ## Naming
 
