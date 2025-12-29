@@ -28,6 +28,7 @@ vaderSentiment
 # IO / utilities
 openpyxl
 python-dateutil
+kagglehub
 
 # Notebooks
 jupyter
