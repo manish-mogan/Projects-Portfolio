@@ -17,12 +17,11 @@ ENV/
 .ipynb_checkpoints/
 
 # Notebook sweep / runtime downloads
-scripts/notebook_sweep_failures.log
-code/population_generations_story/ne_*.zip
-code/population_generations_story/cache/
+projects/Population Generations Story/ne_*.zip
+projects/Population Generations Story/cache/
 
 # Notebook-generated exports
-code/Altair/Cars.html
+projects/Altair/Cars.html
 
 # OS/editor
 .DS_Store

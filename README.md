@@ -4,8 +4,7 @@ A portfolio of Python + Jupyter projects covering analytics, experimentation, fo
 
 ## Repository layout
 
-- `code/` — each project lives in its own folder with its notebook and any local data files it uses
-- `scripts/` — helper scripts (notebook output stripping)
+- `projects/` — each project lives in its own folder with its notebook and any local data files it uses
 
 ## Setup
 
@@ -15,30 +14,24 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Then open any notebook under `code/` in VS Code (or Jupyter) and run cells top-to-bottom.
+Then open any notebook under `projects/` in VS Code (or Jupyter) and run cells top-to-bottom.
 
 ## Notebook outputs
 
-Notebook outputs can be helpful for quickly reviewing results. To keep the repo fast, the helper script removes large widget metadata blobs by default.
-
-If you want to also remove outputs + execution counts (for lightweight diffs), run:
-
-```bash
-python scripts/strip_notebook_outputs.py --strip-outputs
-```
+Notebook outputs are committed so the rendered results are visible.
 
 ## Projects
 
-- `code/AB Testing/ab_testing.ipynb` — A/B testing workflow (SRM checks, uplift estimation, CUPED, multiple testing)
-- `code/Geospatial Site Selection/geospatial_site_selection.ipynb` — geospatial clustering + candidate site selection
-- `code/NLP Sentiment Topics/nlp_sentiment_topics.ipynb` — sentiment scoring + topic modeling on reviews
-- `code/Customer Churn/customer_churn.ipynb` — churn modeling (EDA → features → baseline models)
-- `code/Retail Sales Forecasting/retail_sales_forecasting.ipynb` — time series forecasting
-- `code/Fraud Detection Anomaly/fraud_detection_anomaly.ipynb` — anomaly detection / fraud scoring
-- `code/Customer Segmentation RFM/customer_segmentation_rfm.ipynb` — RFM feature engineering + customer segmentation
-- `code/Cohort Retention Analysis/cohort_retention_analysis.ipynb` — cohort retention analysis from event logs
-- `code/Karate/karate_network.ipynb` — Karate Club network centrality + visualization (see also `code/Karate/karate.html`)
-- `code/Stellar Mapper/stellar_map_builder.ipynb` — star catalog mapping (see folder for supporting files)
+- `projects/AB Testing/AB Testing.ipynb` — A/B testing workflow (SRM checks, uplift estimation, CUPED, multiple testing)
+- `projects/Geospatial Site Selection/Geospatial Site Selection.ipynb` — geospatial clustering + candidate site selection
+- `projects/NLP/NLP Sentiment Topics.ipynb` — sentiment scoring + topic modeling on reviews
+- `projects/Customer Churn/Customer Churn.ipynb` — churn modeling (EDA → features → baseline models)
+- `projects/Retail Sales Forecasting/Retail Sales Forecasting.ipynb` — time series forecasting
+- `projects/Fraud Detection Anomaly/Fraud Detection Anomaly.ipynb` — anomaly detection / fraud scoring
+- `projects/Customer Segmentation RFM/Customer Segmentation RFM.ipynb` — RFM feature engineering + customer segmentation
+- `projects/Cohort Retention Analysis/Cohort Retention Analysis.ipynb` — cohort retention analysis from event logs
+- `projects/Karate/Karate.ipynb` — Karate Club network centrality + visualization (see also `projects/Karate/karate.html`)
+- `projects/Stellar Mapper/Stellar Mapper.ipynb` — star catalog mapping (see folder for supporting files)
 
 ## Notes
 
