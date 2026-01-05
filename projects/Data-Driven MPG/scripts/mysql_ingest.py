@@ -1,3 +1,5 @@
+# pyright: reportMissingImports=false
+
 import os
 from pathlib import Path
 import argparse

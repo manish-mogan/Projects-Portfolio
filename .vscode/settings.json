@@ -17,9 +17,5 @@
     "**/.venv": true,
     "**/__pycache__": true,
     "**/.ipynb_checkpoints": true
-  },
-  "python.analysis.exclude": [
-    "**/.venv/**",
-    "**/.ipynb_checkpoints/**"
-  ]
+  }
 }
