@@ -8,6 +8,12 @@ __pycache__/
 dist/
 build/
 
+# Common caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+
 # Virtual environments
 .venv/
 venv/
@@ -16,6 +22,11 @@ ENV/
 # Jupyter
 .ipynb_checkpoints/
 ipynb_checkpoints/
+
+# Notebook artifacts / exports
+**/submission*.csv
+**/*.joblib
+**/*.pkl
 
 # Notebook sweep / runtime downloads
 projects/Population Generations Story/ne_*.zip
@@ -30,6 +41,9 @@ projects/Austin Housing Data Analysis/austin_housing_data.csv
 
 # OS/editor
 .DS_Store
+.idea/
+.env
+.env.*
 .vscode/
 !/.vscode/
 !/.vscode/settings.json
