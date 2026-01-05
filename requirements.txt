@@ -39,3 +39,11 @@ ipykernel
 # Other analyses
 yfinance
 pyvis
+
+# ML modeling + interpretability (used in Medication Non Adherence project)
+xgboost
+lightgbm
+lime
+
+# MySQL connector (used in Data-Driven MPG ingestion script)
+mysql-connector-python
