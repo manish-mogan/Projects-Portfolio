@@ -36,14 +36,6 @@
       "pyrightconfig.json": true,
       "*.code-workspace": true
     },
-    "python.analysis.exclude": [
-      "**/.git/**",
-      "**/.venv/**",
-      ".venv/**",
-      "**/__pycache__/**",
-      "**/.ipynb_checkpoints/**",
-      "data/**"
-    ],
     "python.analysis.indexing": false,
     "python.analysis.diagnosticMode": "openFilesOnly",
 
