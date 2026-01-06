@@ -1,0 +1,6 @@
+# Geospatial extras (install when working on geo notebooks)
+
+geopandas
+folium
+OSMPythonTools
+geodatasets

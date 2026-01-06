@@ -14,6 +14,30 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+### Dependency profiles
+
+This repo supports a lighter default install for day-to-day work, and optional extras for heavier projects.
+
+- `requirements-base.txt` — most notebooks
+- `requirements-geo.txt` — geospatial notebooks
+- `requirements-ml.txt` — ML notebooks (can be large)
+- `requirements.txt` — full install (base + geo + ml)
+
+If you use the helper script, it defaults to `base` in GitHub Codespaces and `full` elsewhere:
+
+```bash
+./scripts/setup_venv.sh
+
+# force full install
+REQUIREMENTS_PROFILE=full ./scripts/setup_venv.sh
+
+# only geo extras
+REQUIREMENTS_PROFILE=geo ./scripts/setup_venv.sh
+
+# only ML extras
+REQUIREMENTS_PROFILE=ml ./scripts/setup_venv.sh
+```
+
 Then open any notebook under `projects/` in VS Code (or Jupyter) and run cells top-to-bottom.
 
 ## Notebook outputs

@@ -1,0 +1,6 @@
+# ML extras (heavy; install only when needed)
+
+# These can pull large binary wheels (e.g., nvidia-nccl-cu12 via newer xgboost)
+xgboost
+lightgbm
+lime

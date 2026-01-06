@@ -1,0 +1,38 @@
+# Base (daily-driver) dependencies for most notebooks
+
+# Core data stack
+pandas
+numpy
+scipy
+scikit-learn
+statsmodels
+
+# Visualization
+matplotlib
+seaborn
+altair
+vega-datasets
+plotly
+anywidget
+
+# Networks / NLP (used in some notebooks)
+networkx
+nltk
+wordcloud==1.9.4
+vaderSentiment
+
+# IO / utilities
+openpyxl
+python-dateutil
+kagglehub
+yfinance
+pyvis
+
+# Notebooks
+jupyter
+ipython
+nbconvert
+ipykernel
+
+# DB connector (used in Data-Driven MPG ingestion script)
+mysql-connector-python

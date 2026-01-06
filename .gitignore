@@ -38,6 +38,11 @@ projects/Austin Housing Data Analysis/reports/exports/
 
 # Large local datasets
 projects/Austin Housing Data Analysis/austin_housing_data.csv
+projects/Fraud Detection Anomaly/creditcard.csv
+
+# Large local data formats
+**/*.parquet
+**/*.feather
 
 # OS/editor
 .DS_Store

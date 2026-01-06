@@ -1,0 +1,13 @@
+{
+  "folders": [
+    {
+      "name": "leetcode",
+      "path": "leetcode"
+    }
+  ],
+  "settings": {
+    "git.openRepositoryInParentFolders": "always",
+    "python.analysis.indexing": false,
+    "python.analysis.diagnosticMode": "openFilesOnly"
+  }
+}

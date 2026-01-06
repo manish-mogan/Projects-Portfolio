@@ -1,49 +1,5 @@
-# Core data stack
-pandas
-numpy
-scipy
-scikit-learn
-statsmodels
+# Full environment (installs everything)
 
-# Visualization
-matplotlib
-seaborn
-altair
-vega-datasets
-plotly
-anywidget
-
-# Geospatial
-geopandas
-folium
-OSMPythonTools
-geodatasets
-
-# Networks / NLP (used in some notebooks)
-networkx
-nltk
-wordcloud==1.9.4
-vaderSentiment
-
-# IO / utilities
-openpyxl
-python-dateutil
-kagglehub
-
-# Notebooks
-jupyter
-ipython
-nbconvert
-ipykernel
-
-# Other analyses
-yfinance
-pyvis
-
-# ML modeling + interpretability (used in Medication Non Adherence project)
-xgboost
-lightgbm
-lime
-
-# MySQL connector (used in Data-Driven MPG ingestion script)
-mysql-connector-python
+-r requirements-base.txt
+-r requirements-geo.txt
+-r requirements-ml.txt
