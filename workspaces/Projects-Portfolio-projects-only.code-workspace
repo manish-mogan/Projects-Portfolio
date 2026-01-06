@@ -2,12 +2,13 @@
   "folders": [
     {
       "name": "projects",
-      "path": "projects"
+      "path": "../projects"
     }
   ],
   "settings": {
     "git.openRepositoryInParentFolders": "always",
     "python.analysis.indexing": false,
-    "python.analysis.diagnosticMode": "openFilesOnly"
+    "python.analysis.diagnosticMode": "openFilesOnly",
+    "python.analysis.configFile": "../pyrightconfig.json"
   }
 }

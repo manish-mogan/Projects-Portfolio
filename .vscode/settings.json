@@ -31,5 +31,10 @@
     "**/projects/Fraud Detection Anomaly/creditcard.csv": true
   },
 
-  "git.autorefresh": false
+  "git.autorefresh": false,
+
+  "window.restoreWindows": "none",
+  "workbench.startupEditor": "none",
+  "workbench.editor.restoreViewState": false,
+  "files.hotExit": "off"
 }

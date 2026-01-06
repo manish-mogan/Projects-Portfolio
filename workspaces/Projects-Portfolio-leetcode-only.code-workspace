@@ -2,12 +2,13 @@
   "folders": [
     {
       "name": "leetcode",
-      "path": "leetcode"
+      "path": "../leetcode"
     }
   ],
   "settings": {
     "git.openRepositoryInParentFolders": "always",
     "python.analysis.indexing": false,
-    "python.analysis.diagnosticMode": "openFilesOnly"
+    "python.analysis.diagnosticMode": "openFilesOnly",
+    "python.analysis.configFile": "../pyrightconfig.json"
   }
 }

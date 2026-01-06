@@ -2,7 +2,7 @@
   "folders": [
     {
       "name": "Projects-Portfolio",
-      "path": "."
+      "path": ".."
     }
   ],
   "settings": {
@@ -38,6 +38,8 @@
     },
     "python.analysis.indexing": false,
     "python.analysis.diagnosticMode": "openFilesOnly",
+
+    "python.analysis.configFile": "../pyrightconfig.json",
 
     "git.autorefresh": true
   }
