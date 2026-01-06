@@ -9,6 +9,13 @@
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.analysis.autoImportCompletions": false,
 
+  "files.exclude": {
+    ".gitignore": true,
+    "README.md": true,
+    "requirements.txt": true,
+    "pyrightconfig.json": true
+  },
+
   "files.watcherExclude": {
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
